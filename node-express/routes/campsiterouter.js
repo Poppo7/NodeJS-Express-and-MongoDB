@@ -6,28 +6,45 @@ const campsiteRouter = express.Router();
 
 // Define the route for the base path of '/campsites'
 campsiteRouter.route('/')
-    // Middleware for all HTTP methods on /campsites, sets the response status code and header, then calls next()
     .all((req, res, next) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/plain');
-        next(); // Passes control to the next route handler
+        next();
     })
-    // GET request handler for /campsites, responds with a message listing all campsites
     .get((req, res) => {
         res.end('Will send all the campsites to you');
     })
-    // POST request handler for /campsites, responds with a confirmation message using data from the request body
     .post((req, res) => {
         res.end(`Will add the campsite: ${req.body.name} with description: ${req.body.description}`);
     })
-    // PUT request handler for /campsites, sends a 403 status code indicating that the operation is not supported
     .put((req, res) => {
         res.statusCode = 403;
         res.end('PUT operation not supported on /campsites');
     })
-    // DELETE request handler for /campsites, responds with a message indicating all campsites are being deleted
     .delete((req, res) => {
         res.end('Deleting all campsites');
+    });
+
+// Define the route for the path '/campsites/:campsiteId'
+campsiteRouter.route('/:campsiteId')
+    .all((req, res, next) => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/plain');
+        next();
+    })
+    .get((req, res) => {
+        res.end(`Will send details of the campsite with ID: ${req.params.campsiteId} to you`);
+    })
+    .post((req, res) => {
+        res.statusCode = 403;
+        res.end(`POST operation not supported on /campsites/${req.params.campsiteId}`);
+    })
+    .put((req, res) => {
+        res.write(`Updating the campsite with ID: ${req.params.campsiteId}\n`);
+        res.end(`Will update the campsite: ${req.body.name} with description: ${req.body.description}`);
+    })
+    .delete((req, res) => {
+        res.end(`Deleting campsite with ID: ${req.params.campsiteId}`);
     });
 
 // Export the campsiteRouter module so it can be used in other files
