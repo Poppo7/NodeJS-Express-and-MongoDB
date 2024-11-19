@@ -9,6 +9,7 @@
     },
     "dependencies": {
         "mongodb": "^6.10.0",
-        "mongoose": "^8.8.2"
+        "mongoose": "^8.8.2",
+        "mongoose-currency": "^0.3.0"
     }
 }
