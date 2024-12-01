@@ -1,1 +1,1 @@
-These are my course lessons for learning backend development. 
+Course lessons for learning backend development.
