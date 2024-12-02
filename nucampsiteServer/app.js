@@ -4,6 +4,7 @@ const path = require('path');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
+const uploadRouter = require('./routes/uploadRouter');
 
 const campsiteRouter = require('./routes/campsiteRouter');
 const promotionRouter = require('./routes/promotionRouter');
@@ -55,5 +56,17 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// Secure traffic only
+app.all('*', (req, res, next) => {
+  if (req.secure) {
+      return next();
+  } else {
+      console.log(`Redirecting to: https://${req.hostname}:${app.get('secPort')}${req.url}`);
+      res.redirect(301, `https://${req.hostname}:${app.get('secPort')}${req.url}`);
+  }
+});
+
+app.use('/imageUpload', uploadRouter);
 
 module.exports = app;
