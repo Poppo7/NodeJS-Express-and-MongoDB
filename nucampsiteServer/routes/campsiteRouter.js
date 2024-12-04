@@ -1,8 +1,11 @@
 const express = require('express');
 const Campsite = require('../models/campsite');
 const authenticate = require('../authenticate');
+const cors = require('./cors');
 
 const campsiteRouter = express.Router();
+
+/* do cross-origin */
 
 // Utility function for error handling
 function handleNotFound(res, next, entity, message) {
